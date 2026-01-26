@@ -22,9 +22,49 @@ useradd [options] username :- this command helps you to add the user
 
 <h2>Final Answer</h2>
 
-Before making the user we need to login to the another server(App server 3 ,in this case)
-do :- ssh user@host-ip
+1. First, login into the app server using `SSH`:
 
-Adding the user
-do :- useradd -s /sbin/nologin yousuf
+    ```sh
+    ssh user@app-server-ip or ssh user@server-name
+    ```
+
+    > It will ask for user password, enter the correct password.
+
+2. After login into server, run the following command to create user with non-interactive shell
+
+    ```sh
+    sudo useradd -m -s /usr/sbin/nologin user-name
+    ```
+
+    `s`: for shell, here we are giving nologin shell
+
+    `m`: for user home directory, It will create a directory with user-name under /home
+
+3. Verify the result
+
+    ```sh
+    cat /etc/passwd
+    ```
+
+    It should give you a list of users where you will find your created user. It will look like this:
+    `yousuf:x:1003:1004::/home/yousuf:/usr/sbin/nologin`
+
+    Try to login using:
+
+    ```sh
+    sudo su user-name
+    ```
+
+    Output: `This account is currently not available.`
+
+
+### useradd Command Options
+
+- `-m`: Create home directory
+- `-s`: Specify shell
+- `-d`: Custom home directory path
+- `-g`: Primary group
+- `-G`: Additional groups
+- `-e`: Account expiry date
+
 
