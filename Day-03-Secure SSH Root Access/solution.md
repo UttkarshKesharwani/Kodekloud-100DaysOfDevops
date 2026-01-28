@@ -31,6 +31,11 @@ Following security audits, the xFusionCorp Industries security team has rolled o
         sudo sed -i 's/PermitRootLogin yes/PermitRootLogin no/g' /etc/ssh/sshd_config && sudo systemctl restart sshd
     ```
 
+## Verify result
+
+>sudo cat /etc/ssh/sshd_config | grep PermitRootLogin
+![alt text](image.png)
+
 ### SSH configration option 
 
 - `PermitRootLogin no`: Disable root login
