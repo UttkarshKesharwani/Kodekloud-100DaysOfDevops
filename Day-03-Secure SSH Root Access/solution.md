@@ -31,6 +31,10 @@ Following security audits, the xFusionCorp Industries security team has rolled o
         sudo sed -i 's/PermitRootLogin yes/PermitRootLogin no/g' /etc/ssh/sshd_config && sudo systemctl restart sshd
     ```
 
+## Example 
+The below image is the visual apperance of the task for 1 user (you need to perform in the 3 server name :- stapp01,stapp02 and stapp03)
+![alt text](image-1.png)
+
 ## Verify result
 
 >sudo cat /etc/ssh/sshd_config | grep PermitRootLogin
