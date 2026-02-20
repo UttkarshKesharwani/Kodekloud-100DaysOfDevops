@@ -10,3 +10,11 @@ The DevOps team established a new Git repository last week, which remains unused
 2. Clone this Git repository to the `/usr/src/kodekloudrepos` directory. Perform this task using the natasha user, and ensure that no modifications are made to the repository or existing directories, such as changing permissions or making unauthorized alterations.
 
 
+# solution :- 
+
+1. Login into Storage server and then run the following commands
+
+    ```sh
+    cd /usr/src/kodekloudrepos
+    git clone /opt/official.git
+    ```
