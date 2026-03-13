@@ -1,0 +1,9 @@
+
+services:
+  httpd:
+    container_name: httpd
+    image: httpd:latest
+    ports:
+      - "5002:80"
+    volumes:
+      - /opt/security:/usr/local/apache2/htdocs
