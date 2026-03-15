@@ -1,0 +1,22 @@
+
+
+services:
+  web:
+    container_name: php_blog
+    image: php:8.0-apache
+    ports:
+      - "6000:80"
+    volumes:
+      - /var/www/html:/var/www/html
+  
+  DB:
+    container_name: mysql_blog
+    image: mariadb:latest
+    ports:
+      - "3306:3306"
+    environment:
+      - MYSQL_DATABASE=database_blog
+      - MARIADB_ROOT_PASSWORD=root_password_blog
+      - MARIADB_USER=user_blog
+    volumes:
+      - /var/lib/mysql:/var/lib/mysql
