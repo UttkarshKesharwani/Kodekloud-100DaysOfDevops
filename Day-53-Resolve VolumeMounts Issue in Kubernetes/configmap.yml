@@ -1,0 +1,67 @@
+
+apiVersion: v1
+items:
+- apiVersion: v1
+  data:
+    ca.crt: |
+      -----BEGIN CERTIFICATE-----
+      MIIBdjCCAR2gAwIBAgIBADAKBggqhkjOPQQDAjAjMSEwHwYDVQQDDBhrM3Mtc2Vy
+      dmVyLWNhQDE3NzQxOTY0NDQwHhcNMjYwMzIyMTYyMDQ0WhcNMzYwMzE5MTYyMDQ0
+      WjAjMSEwHwYDVQQDDBhrM3Mtc2VydmVyLWNhQDE3NzQxOTY0NDQwWTATBgcqhkjO
+      PQIBBggqhkjOPQMBBwNCAARvFSdRejPfgdZutObTfQi5nMG4+oiGcVhGEd0mZvP6
+      FHAlyVPF1EzikfeNTwlF9b7nOs0Xfih9JDAz7I8JLBPgo0IwQDAOBgNVHQ8BAf8E
+      BAMCAqQwDwYDVR0TAQH/BAUwAwEB/zAdBgNVHQ4EFgQUf9Q57u6SU0U29tFPvCB2
+      bCsnz9gwCgYIKoZIzj0EAwIDRwAwRAIgPoydzrMcxbBVvqsfHem/Vf3DK409MBGu
+      LRYBpCK6UuACIA3qpQXaWksfML+rLXXgwPpJ8VGndcR6Ezc48EHE59PQ
+      -----END CERTIFICATE-----
+  kind: ConfigMap
+  metadata:
+    annotations:
+      kubernetes.io/description: Contains a CA bundle that can be used to verify the
+        kube-apiserver when using internal endpoints such as the internal service
+        IP or kubernetes.default.svc. No other usage is guaranteed across distributions
+        of Kubernetes clusters.
+    creationTimestamp: "2026-03-22T16:20:57Z"
+    name: kube-root-ca.crt
+    namespace: default
+    resourceVersion: "422"
+    uid: 892556d7-aa45-4e6f-944d-d66f78cae221
+- apiVersion: v1
+  data:
+    nginx.conf: |
+      events {
+      }
+      http {
+        server {
+          listen 8099 default_server;
+          listen [::]:8099 default_server;
+
+          # Set nginx to serve files from the shared volume!
+          root /var/www/html;
+          index  index.html index.htm index.php;
+          server_name _;
+          location / {
+            try_files $uri $uri/ =404;
+          }
+          location ~ \.php$ {
+            include fastcgi_params;
+            fastcgi_param REQUEST_METHOD $request_method;
+            fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
+            fastcgi_pass 127.0.0.1:9000;
+          }
+        }
+      }
+  kind: ConfigMap
+  metadata:
+    annotations:
+      kubectl.kubernetes.io/last-applied-configuration: |
+        {"apiVersion":"v1","data":{"nginx.conf":"events {\n}\nhttp {\n  server {\n    listen 8099 default_server;\n    listen [::]:8099 default_server;\n\n    # Set nginx to serve files from the shared volume!\n    root /var/www/html;\n    index  index.html index.htm index.php;\n    server_name _;\n    location / {\n      try_files $uri $uri/ =404;\n    }\n    location ~ \\.php$ {\n      include fastcgi_params;\n      fastcgi_param REQUEST_METHOD $request_method;\n      fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;\n      fastcgi_pass 127.0.0.1:9000;\n    }\n  }\n}\n"},"kind":"ConfigMap","metadata":{"annotations":{},"name":"nginx-config","namespace":"default"}}
+    creationTimestamp: "2026-03-22T16:48:07Z"
+    name: nginx-config
+    namespace: default
+    resourceVersion: "1206"
+    uid: 30cf8fcb-cbfd-4d4e-9224-c7c6bbca13c8
+kind: List
+metadata:
+  resourceVersion: ""
+  
