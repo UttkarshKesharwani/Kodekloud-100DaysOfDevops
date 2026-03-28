@@ -27,7 +27,7 @@ Note: The kubectl utility on the jump-host has been configured to work with the 
 
     paste the file content given in the below file 
 
-    [!here is the file](./manifest.yml)
+    ![here is the file](./manifest.yml)
 
 2. Create the object 
 
