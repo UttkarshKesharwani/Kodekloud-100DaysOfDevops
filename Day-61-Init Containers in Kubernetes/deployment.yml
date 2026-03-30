@@ -1,0 +1,45 @@
+
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ic-deploy-devops
+
+spec:
+  strategy:
+   type: RollingUpdate
+   rollingUpdate:
+    maxUnavailable: 1
+    maxSurge: 1
+
+  replicas: 1
+  selector:
+    matchLabels:
+      app: ic-devops
+
+  template:
+    metadata:
+      labels:
+        app: ic-devops
+    spec:
+
+      initContainers:
+      - name: ic-msg-devops
+        image: fedora:latest
+        command: ['/bin/bash', '-c' , 'echo Init Done - Welcome to xFusionCorp Industries > /ic/blog']
+        volumeMounts:
+          - name: ic-volume-devops
+            mountPath: /ic
+
+      containers:
+      - name: ic-main-devops
+        image: fedora:latest
+        command: ['/bin/bash', '-c' , 'while true; do cat /ic/blog; sleep 5; done']
+        volumeMounts:
+          - name: ic-volume-devops
+            mountPath: /ic
+
+      volumes:
+        - name: ic-volume-devops
+          emptyDir: {}
+      
