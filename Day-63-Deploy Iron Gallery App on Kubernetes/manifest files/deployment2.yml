@@ -1,0 +1,50 @@
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  namespace: iron-namespace-datacenter
+  name: iron-db-deployment-datacenter
+  labels:
+    db: mariadb
+spec:
+  replicas: 1
+  strategy:
+    type: Recreate
+  selector:
+    matchLabels:
+      db: mariadb
+  template:
+    metadata:
+      labels:
+        db: mariadb
+    spec:
+      containers:
+      - name: iron-db-container-datacenter
+        image: kodekloud/irondb:2.0
+        env:
+        - name: MYSQL_DATABASE
+          value: "database_apache"
+        - name: MYSQL_ROOT_PASSWORD
+          value: "this-is-root-password"
+        - name: MYSQL_PASSWORD
+          value: "this-is-password"
+        - name: MYSQL_USER
+          value: "uttkarsh"
+        resources:
+          limits:
+            memory: "100Mi"
+            cpu: "50m"
+          requests:
+            memory: "100Mi"
+            cpu: "50m"
+        volumeMounts:
+        - name: db
+          mountPath: /var/lib/mysql
+      volumes:
+        - name: db
+          emptyDir: {}
+        
+          
+
+
+    
